@@ -37,18 +37,18 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=g:Select(tp,1,1)
+		local dg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(dg)
 		if Duel.Destroy(dg,REASON_EFFECT)>0 then
 			--This card can attack twice this turn
-			local e1=Effect.CreateEffect(c)
+			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetDescription(3201)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(1)
 			e1:SetReset(RESETS_STANDARD_PHASE_END)
-			c:RegisterEffect(e1)
+			e:GetHandler():RegisterEffect(e1)
 		end
 	end
 end
